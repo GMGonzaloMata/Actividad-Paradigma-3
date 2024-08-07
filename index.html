@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activida1 Paradigma3</title>
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        #background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;       
+            object-fit: cover;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+        }
+
+        button {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+         background-color: rgba(0, 0, 0, 0.8);
+        }       
+
+    </style>
+
+</head>
+
+<body>
+    <div class="video-container">
+        <video id="background-video" autoplay muted loop></video>
+        <div class="controls">
+            <button id="prev-video">Anterior</button>
+            <button id="next-video">Siguiente</button>
+        </div>
+    </div>
+
+    <!-- Logica para pasar al siguiente video perro -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+        const videoElement = document.getElementById("background-video");
+        const videos = [
+        "./videos/1851190-uhd_3840_2160_25fps.mp4",
+        "./videos/3129957-uhd_3840_2160_25fps.mp4",
+        "./videos/3141208-uhd_3840_2160_25fps.mp4"
+    ];
+    let currentVideoIndex = 0;
+
+    // Función para actualizar el video
+    function updateVideo(index) {
+        videoElement.src = videos[index];
+        videoElement.play();
+    }
+
+    // Inicializar el primer video
+    updateVideo(currentVideoIndex);
+
+    // Event listeners para los botones
+    document.getElementById("prev-video").addEventListener("click", () => {
+        currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
+        updateVideo(currentVideoIndex);
+    });
+
+    document.getElementById("next-video").addEventListener("click", () => {
+        currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+        updateVideo(currentVideoIndex);
+    });
+});
+
+    </script>
+</body>
+</html>
