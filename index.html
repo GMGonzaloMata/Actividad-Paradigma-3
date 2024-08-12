@@ -47,11 +47,9 @@
         }
 
         button:hover {
-         background-color: rgba(0, 0, 0, 0.8);
-        }       
-
+            background-color: rgba(0, 0, 0, 0.8);
+        }
     </style>
-
 </head>
 
 <body>
@@ -63,38 +61,41 @@
         </div>
     </div>
 
-    <!-- Logica para pasar al siguiente video perro -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-        const videoElement = document.getElementById("background-video");
-        const videos = [
-        "./videos/1851190-uhd_3840_2160_25fps.mp4",
-        "./videos/3129957-uhd_3840_2160_25fps.mp4",
-        "./videos/3141208-uhd_3840_2160_25fps.mp4"
-    ];
-    let currentVideoIndex = 0;
+            const videoElement = document.getElementById("background-video");
+            const videos = [
+                "./videos/1851190-uhd_3840_2160_25fps.mp4",
+                "./videos/3129957-uhd_3840_2160_25fps.mp4",
+                "./videos/3141208-uhd_3840_2160_25fps.mp4"
+            ];
+            
+            // Obtener el índice del video desde localStorage, o usar 0 si no hay ninguno
+            let currentVideoIndex = parseInt(localStorage.getItem("currentVideoIndex"), 10) || 0;
 
-    // Función para actualizar el video
-    function updateVideo(index) {
-        videoElement.src = videos[index];
-        videoElement.play();
-    }
+            // Función para actualizar el video
+            function updateVideo(index) {
+                videoElement.src = videos[index];
+                videoElement.play();
+                
+                // Guardar el índice del video en localStorage
+                localStorage.setItem("currentVideoIndex", index);
+            }
 
-    // Inicializar el primer video
-    updateVideo(currentVideoIndex);
+            // Inicializar el video
+            updateVideo(currentVideoIndex);
 
-    // Event listeners para los botones
-    document.getElementById("prev-video").addEventListener("click", () => {
-        currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
-        updateVideo(currentVideoIndex);
-    });
+            // Event listeners para los botones
+            document.getElementById("prev-video").addEventListener("click", () => {
+                currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
+                updateVideo(currentVideoIndex);
+            });
 
-    document.getElementById("next-video").addEventListener("click", () => {
-        currentVideoIndex = (currentVideoIndex + 1) % videos.length;
-        updateVideo(currentVideoIndex);
-    });
-});
-
+            document.getElementById("next-video").addEventListener("click", () => {
+                currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+                updateVideo(currentVideoIndex);
+            });
+        });
     </script>
 </body>
 </html>
